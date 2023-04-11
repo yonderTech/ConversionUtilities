@@ -9,7 +9,9 @@
 	<PropertyGroup>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>1.0.1</Version>
+		<ProjectUrl>https://github.com/yonderTech/ConversionUtilities/tree/master/EntityMapperService</ProjectUrl>
+		<RepositoryUrl>https://github.com/yonderTech/ConversionUtilities/tree/master/EntityMapperService</RepositoryUrl>
+		<Version>1.0.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
