@@ -139,7 +139,6 @@ namespace ConversionUtilities
                 case TypeCode.Int32:
                 case TypeCode.Int64:
                 case TypeCode.String:
-                    // scalar type
                     return true;
                 default:
                     return false;
