@@ -11,7 +11,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/yonderTech/ConversionUtilities/tree/master/EntityMapperService</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/yonderTech/ConversionUtilities/tree/master/EntityMapperService</RepositoryUrl>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
