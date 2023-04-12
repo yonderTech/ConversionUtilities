@@ -17,7 +17,7 @@ namespace EntityMapperService.Tests
                 {
                     Id = Guid.NewGuid(),
                     Id2 = Guid.NewGuid(),
-                    Prop1 = "Allo",
+                    Prop1 = "Hello",
                     Bs = new List<Model.B>
                   {
                       new Model.B
