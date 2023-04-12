@@ -70,7 +70,7 @@ namespace ConversionUtilities
                 var targetProperty = targetProperties.SingleOrDefault(pi => pi.Name.ToLower() == sourceProperty.Name.ToLower());
                 var sourceValue = sourceProperty.GetValue(source);
 
-                if (sourceValue == null || targetProperty == null)
+                if (sourceValue == null || targetProperty == null || targetProperty.SetMethod == null)
                     continue;
 
                 //If the source property is a List<> of any kind

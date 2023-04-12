@@ -86,5 +86,12 @@ namespace EntityMapperService.Tests
                 Assert.True(false);
             }
         }
+
+        [Fact]
+        public void TestList()
+        {
+            EntityMappingService entityMappingService = new EntityMappingService();
+            List<string> a = entityMappingService.Clone<List<string>>(new List<string>{ "a", "b", "c" });
+        }
     }
 }
