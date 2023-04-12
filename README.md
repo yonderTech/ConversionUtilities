@@ -2,7 +2,7 @@
 
 **EntityMapperService**
 
-The service handles conversion of an object (clones it actually) to another type, even if _IConvertible _is not implemented.
+The service handles conversion of an object (clones it actually) to another type, even if IConvertible is not implemented.
 
 You may not want database access objects (Entity Framework models, for example) to be directly exposed as an API response to the client, so you create a DTO (data transfer object) whose definition only expose the data access object' properties you want.
 
