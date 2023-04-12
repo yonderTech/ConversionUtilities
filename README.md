@@ -14,5 +14,5 @@ Converting from DAO to DTO can be a daunting task, with EntityMapperService, not
 
 `Dto.A dtoA = service.Clone<Dto.A>(daoA);`
 
-There it is, that simple. The method assumes that property names and types and of the same on both sides.
+There it is, that simple. The method assumes that property names and types and of the same on both sides. The method recursively crawls properties that are List<>'s as well.
 
