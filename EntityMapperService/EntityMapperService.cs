@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace ConversionUtilities
 {
-    public class EntityMappingService
+    public class EntityMapperService
     {
 
         /// <summary>
@@ -68,18 +68,39 @@ namespace ConversionUtilities
             {
 
                 var targetProperty = targetProperties.SingleOrDefault(pi => pi.Name.ToLower() == sourceProperty.Name.ToLower());
-                var sourceValue = sourceProperty.GetValue(source);
 
-                if (sourceValue == null || targetProperty == null || targetProperty.SetMethod == null)
+                object? sourceValue = null;
+                bool isList = false;
+                Type? listType = null;
+                bool isRootObject = false; //if the source is a class with properties or simply a value.
+
+                if (targetProperty == null || targetProperty.SetMethod == null)
+                    continue;
+
+                try
+                {
+                    sourceValue = sourceProperty.GetValue(source);
+                    isList = IsList(sourceProperty);
+                    listType = targetProperty.PropertyType;
+                }
+                catch
+                {
+                    sourceValue = source;
+                    isRootObject = true;
+                    isList = IsList(sourceValue.GetType());
+                    listType = source.GetType();
+                }
+                               
+                if (sourceValue == null)
                     continue;
 
                 //If the source property is a List<> of any kind
-                if (IsList(sourceProperty))
+                if (isList)
                 {
 
                     //Create an instance of the target list
                     //var targetList = Activator.CreateInstance(targetProperty.GetValue(result).GetType());
-                    var targetList = Activator.CreateInstance(targetProperty.PropertyType);
+                    var targetList = Activator.CreateInstance(listType);
 
                     if (targetList == null)
                         continue;
@@ -95,11 +116,24 @@ namespace ConversionUtilities
 
                     foreach (var item in listItems)
                     {
-                        var targetItem = Clone(item, GetListUnderlyingType(targetList));
+                        object? targetItem = null;
+
+                        if (IsScalar(item))
+                        {
+                            targetItem = item;
+                        }
+                        else
+                        {
+                            targetItem = Clone(item, GetListUnderlyingType(targetList));
+                        }
+
                         addMethod.Invoke(targetList, new object[] { targetItem });
                     }
 
-                    targetProperty.SetValue(result, targetList);
+                    if (isRootObject)
+                        return targetList;
+                    else
+                        targetProperty.SetValue(result, targetList);
                 }
                 else
                 {
@@ -122,7 +156,7 @@ namespace ConversionUtilities
             return result;
         }
 
-       
+
 
         private bool IsScalar(object value)
         {
@@ -166,8 +200,15 @@ namespace ConversionUtilities
             return typeof(IEnumerable<object>).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string);
         }
 
-        
-
+        /// <summary>
+        /// Check if input type is one of List<> type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private bool IsList(Type type)
+        {
+            return (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(List<>)));
+        }
 
     }
 }
